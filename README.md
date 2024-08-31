@@ -15,8 +15,10 @@ This local API doesn't support many features of the orignal PlusStore.
 Some of these feature might be added later, but most don't make sense in a local environment.
 
 ## Install
-download and install "simple-web-server" here https://simplewebserver.org/
-Create a new server with a "Folder Path" to your ROMs. This can also be your nextcloud PlusStore folder if you have a PlusStore account.
-The Server Port must be set to "80". Activate "Accessible on local network" and "Enable .swshtaccess configuration files" (see Advanced Options).
+Download and install "simple-web-server" from here https://simplewebserver.org/
 
-Then download "api.php" and ".swshtaccess" from this repository and place them in your ROMs root folder.
+Create a new server with a "Folder Path" to your ROMs. This can also be your nextcloud PlusStore folder if you have a PlusStore account.
+
+Server port must be set to "80". Activate "Accessible on local network" and "Enable .swshtaccess configuration files" (see Advanced Options).
+
+Download "api.php" and ".swshtaccess" from this repository and place them in your ROMs root folder.
