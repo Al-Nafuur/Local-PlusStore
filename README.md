@@ -9,8 +9,9 @@ This local API doesn't support many features of the orignal PlusStore.
  - "My Recently Played ROMs"
  - Text file reading
  - ZIP/tar file unpacking
- - High Score Club list
+ - High Score Club leaderboard
  - PlusCart chat
+ - List of users online
 
 Some of these feature might be added later, but most don't make sense in a local environment.
 
