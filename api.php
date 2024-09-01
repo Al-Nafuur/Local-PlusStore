@@ -13,6 +13,9 @@
 *  - ZIP/tar file unpacking
 *  - High Score Club list
 *  - PlusCart chat
+*  - List of users online
+*
+* WiFi update feature is untested !
 */
 
 SSJSKey = 'wa4e76yhefy54t4a'
@@ -24,35 +27,42 @@ function plusCartFileType(filename){
     return "2 ";
 }
 
-var responseBody = '00\n';
-res.getFile('/' + req.arguments.p, function(file) {
-    if (file.error) {
-        res.end('0 000000 error\n');
-    } else if (file.isFile) {
+var responseBody = '';
+var path = req.arguments.u === '1' ? 'firmware.bin' : req.arguments.p;
+res.getFile('/' + path, function(file) {
+    if (file.isFile) {
         res.renderFileContents(file);
-    } else if (file.isDirectory) {
-        if(file.origpath != '/')
-            responseBody += '0 000000 ..\n';
-        file.getDirContents(function(results) {
-            var dirs = [];
-            var files = [];
-            results.forEach((element) => {
-                if (element.isDirectory){
-                    dirs.push(element);
-                }else if (element.isFile){
-                    files.push(element);
-                }
-            });
-            dirs.forEach((dir) => {
-                responseBody += '1 000000 ' + dir.name + '\n';
-            });
-            files.forEach((file) => {
-                responseBody += plusCartFileType(file.name) + file.size.toString().padStart(6, '0') + ' ' + file.name + '\n';
-            });
-            res.write(responseBody);
-            res.end();
-        });
     } else {
-        res.end('0 000000 file/dir not found\n');
+        if (file.error) {
+            responseBody += '0 000000 error\n';
+        } else if (file.isDirectory) {
+            if(file.origpath != '/' && file.origpath != '/Setup')
+                responseBody += '0 000000 ..\n';
+            file.getDirContents(function(results) {
+                var dirs = [];
+                var files = [];
+                results.forEach((element) => {
+                    if (element.isDirectory){
+                        dirs.push(element);
+                    }else if (element.isFile){
+                        files.push(element);
+                    }
+                });
+                dirs.forEach((dir) => {
+                    responseBody += '1 000000 ' + dir.name + '\n';
+                });
+                files.forEach((file_in_dir) => {
+                    if(file_in_dir.name == "firmware.bin" && file.origpath == '/'){
+                        responseBody = '6 ' + file_in_dir.size.toString().padStart(6, '0') + ' ** WiFi Firmware Update **\n' + responseBody;
+                    } else {
+                        responseBody += plusCartFileType(file_in_dir.name) + file_in_dir.size.toString().padStart(6, '0') + ' ' + file_in_dir.name + '\n';
+                    }
+                });
+            });
+        } else {
+             responseBody += '0 000000 file/dir not found\n';
+        }
+        res.write('00\n' + responseBody);
+        res.end();
     }
 })
