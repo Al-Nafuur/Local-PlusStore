@@ -1,7 +1,7 @@
 /*
 * Local PlusStore API for PlusCarts
 * Copyright 2024 Wolfgang Stubig
-* Version: v1.0.0
+* Version: v1.1.0
 *
 * missing features (some might be added, but most don't make sense in a local environment):
 *  - Search function
