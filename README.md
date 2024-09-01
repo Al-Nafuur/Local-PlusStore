@@ -12,6 +12,7 @@ This local API doesn't support many features of the orignal PlusStore.
  - High Score Club leaderboard
  - PlusCart chat
  - List of users online
+ - WiFi firmware update (FOTA)
 
 Some of these feature might be added later, but most don't make sense in a local environment.
 
